@@ -59,12 +59,20 @@
         <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
       </div>
       <div class='row'>
-        <div class="span8 offset2 github">
-        <h1>Hello World</h1>
+        <div class="span4">
+          <div class="hero-unit">
+            <ul>
+              <li><a href="#hello-world">Hello World</a></li>
+              <li><a href="#npm">NPM</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="span8 github">
+        <p><a id="hello-world"></a></p>
 
-<p>by <a href="http://twitter.com/twilson63">@twilson63</a></p>
+<h1>Hello World</h1>
 
-<p>posted 2012-02-18</p>
+<p><em>posted 2012-02-18 by <a href="http://twitter.com/twilson63">@twilson63</a></em></p>
 
 <h2>Introduction</h2>
 
@@ -131,6 +139,90 @@ server = http.createServer(function(request, response) {
 
 server.listen(3000, console.log('listening on 3000...'));
 </pre></div>
+
+<hr />
+
+<p><a id="npm" style="padding-bottom:60px;" href="/">Top</a></p>
+
+<h1>NPM</h1>
+
+<p><em>posted 2012-02-19 by <a href="http://twitter.com/twilson63">@twilson63</a></em></p>
+
+<p>NPM is the module package manager that ships with nodejs.  You can use npm<br />to organize your dependencies and create and ship reusable modules that you create.</p>
+
+<h2>Package.Json</h2>
+
+<p>When building a nodejs application, you want to reuse modules from the nodejs community.  There are over 7000 modules to choose from and that can be quite challenging to choose the best modules.  But once you do, organizing in your application is easy.</p>
+
+<p>Using your command shell, navigate to your application folder and type:</p>
+
+<div class="highlight"><pre lang=" sh">npm init
+</pre></div>
+
+<p>You will be prompted through a series of questions about your project:</p>
+
+<div class="highlight"><pre lang=" sh">Package name:
+Description:
+Package version:
+Project homepage:
+Project git repository:
+Author name:
+Author email:
+Author url:
+Main module/entry point:
+Test command:
+What versions of node does it run on?
+</pre></div>
+
+<p>Once you complete the questions, you will end up with a file in your folder called package.json.  And it should look similar to this:</p>
+
+<div class="highlight"><pre lang=" json">{
+  "author": "",
+  "name": "foo",
+  "version": "0.0.0",
+  "repository": {
+    "url": ""
+  },
+  "engines": {
+    "node": "~0.6.7"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
+</pre></div>
+
+<p>You will notice two empty sections, "dependencies" and "devDependencies".  The "dependencies" section is the area we want to put or module dependencies.  For example, if we are going to create a simple static file server, we may want to use a module called "filed" that already implements the streaming of files as well as adding the appropriate mime types based on the file extensions.  So we would add filed to the package.json dependencies node.</p>
+
+<div class="highlight"><pre lang=" json">{
+  "author": "",
+  "name": "foo",
+  "version": "0.0.0",
+  "repository": {
+    "url": ""
+  },
+  "engines": {
+    "node": "~0.6.7"
+  },
+  "dependencies": {
+    "filed": "*"
+  },
+  "devDependencies": {}
+}
+</pre></div>
+
+<p>As you can see, we put the module name as the key and an asterisk as the value of the element.  This will tell npm to pull the latest version.  Once your are ready to ship you app, you should change this to the exact version of the module you are using, this will keep your code consistent.  To pull the module down to your application, open your command shell and navigate to your application folder and type:</p>
+
+<div class="highlight"><pre lang=" sh">npm install
+</pre></div>
+
+<p>By running the npm install command, npm will look at your dependencies in your package.json and install them into the node_modules folder underneath your application directory.</p>
+
+<p>NPM is an invaluable tool at managing dependencies, but it can also be used for so much more.  You can use it to document your start command and test command.  To find out more about npm and all of its features, just type :</p>
+
+<div class="highlight"><pre lang=" sh">npm help npm
+</pre></div>
+
+<p>And you will get a detailed overview of each function of the application. </p>
         </div>
       </div>
       <hr>
