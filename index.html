@@ -223,6 +223,74 @@ What versions of node does it run on?
 </pre></div>
 
 <p>And you will get a detailed overview of each function of the application. </p>
+
+<hr />
+
+<p><a id="npm" style="padding-bottom:60px;" href="/">Top</a></p>
+
+<h1>http.request</h1>
+
+<p><em>posted 2012-02-19 by <a href="http://twitter.com/twilson63">@twilson63</a></em></p>
+
+<p>http.request is a function on the http module that enables you to perform an http request to an http server.  The request method returns a ClientRequest object that you can write to.  We will show an example of performing an http get to a json api and a http post to a json api.  You can use this client to also send head, put and delete, but we will demonstrate get and post.</p>
+
+<p>Lets go ahead and create a new project directory:</p>
+
+<div class="highlight"><pre lang=" sh">mkdir httpclient
+cd httpclient
+npm init
+</pre></div>
+
+<p>Follow the defaults, then edit the package.json file and add the following dependencies:</p>
+
+<div class="highlight"><pre lang=" json">{
+  "dependencies": {
+    "coffee-script": "*"
+  }
+}
+</pre></div>
+
+<p>Next, lets run and create index.coffee:</p>
+
+<div class="highlight"><pre lang=" sh">npm install
+touch index.coffee
+</pre></div>
+
+<p>Lets open index.coffee and create a client to do a simple twitter search:</p>
+
+<div class="highlight"><pre lang=" coffeescript">http = require 'http'
+log = console.log
+
+options =
+  host: 'www.twitter.com'
+  port: 80
+  path: '/search.json?q=nodejs'
+  method: 'GET'
+  headers: 
+    'Content-Type': 'application/json'
+
+req = http.request options, (resp) ->
+    log resp.statusCode
+    body = ""
+    resp.on 'data', (data) -> 
+      body += data.toString()
+    resp.on 'end', ->
+      for doc in JSON.parse(body).results
+        log '<==========================================>'
+        log doc.text
+
+req.on 'error', (err) -> log err
+req.end()
+</pre></div>
+
+<p>Save the file and run:</p>
+
+<div class="highlight"><pre lang=" sh">coffee index.coffee
+</pre></div>
+
+<p>And you should get a list of tweets for nodejs.</p>
+
+<p>So lets break it down into parts to describe whats going on.  The first thing we are doing is creating and options object that we will pass into the http.request method.  This object defines the host, port, path, method and headers.  When we call the http.request object, it will return a ClientRequest object that is ready to go, all we need to do is to call end on the newly created ClientRequest Object and node will send the request to the server.  The second argument of the http.request method is a callback which returns a response object.  This callback will fire when the server returns with a response.  This allows us to create some listeners on the the response object to capture the data returned and when the response ends.  To do this we use the on method to receive events from the response object.  The data event fires during the course of the response, then when the response is finished the end event fires.  So as the data event fires we start building the body, and when the end event fires, we know the body of the message is complete and we can start to parse it and work with the data.  For our purposes, we are just sending each tweet to the console.  Lastly, we hook into the request error event, in the case of the site being down or we are not connected to the internet, we should get a fairly descriptive error.  And we call the end method on the request object to invoke the process.</p>
         </div>
       </div>
       <hr>
