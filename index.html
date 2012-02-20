@@ -291,7 +291,27 @@ req.end()
 
 <p>And you should get a list of tweets for nodejs.</p>
 
-<p>So lets break it down into parts to describe whats going on.  The first thing we are doing is creating and options object that we will pass into the http.request method.  This object defines the host, port, path, method and headers.  When we call the http.request object, it will return a ClientRequest object that is ready to go, all we need to do is to call end on the newly created ClientRequest Object and node will send the request to the server.  The second argument of the http.request method is a callback which returns a response object.  This callback will fire when the server returns with a response.  This allows us to create some listeners on the the response object to capture the data returned and when the response ends.  To do this we use the on method to receive events from the response object.  The data event fires during the course of the response, then when the response is finished the end event fires.  So as the data event fires we start building the body, and when the end event fires, we know the body of the message is complete and we can start to parse it and work with the data.  For our purposes, we are just sending each tweet to the console.  Lastly, we hook into the request error event, in the case of the site being down or we are not connected to the internet, we should get a fairly descriptive error.  And we call the end method on the request object to invoke the process.</p>
+<p>So lets break it down into parts to describe whats going on.  </p>
+
+<h3>http.request method</h3>
+
+<p>The first thing we are doing is creating and options object that we will pass into the http.request method.  This object defines the host, port, path, method and headers.  </p>
+
+<h3>http.ClientRequest</h3>
+
+<p>When we call the http.request object, it will return a ClientRequest object that is ready to go, all we need to do is to call end on the newly created ClientRequest Object and node will send the request to the server.  </p>
+
+<h3>Response Callback</h3>
+
+<p>The second argument of the http.request method is a callback which returns a response object.  This callback will fire when the server returns with a response.  This allows us to create some listeners on the the response object to capture the data returned and when the response ends.  </p>
+
+<h3>Response Listeners</h3>
+
+<p>To do this we use the on method to receive events from the response object.  The data event fires during the course of the response, then when the response is finished the end event fires.  So as the data event fires we start building the body, and when the end event fires, we know the body of the message is complete and we can start to parse it and work with the data.  For our purposes, we are just sending each tweet to the console.  </p>
+
+<h3>Request Listeners and End</h3>
+
+<p>Lastly, we hook into the request error event, in the case of the site being down or we are not connected to the internet, we should get a fairly descriptive error.  And we call the end method on the request object to invoke the process.</p>
         </div>
       </div>
       <hr>
